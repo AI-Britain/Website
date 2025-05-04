@@ -82,10 +82,20 @@ header .container {
     flex-wrap: wrap; /* Allow items to wrap on smaller screens */
 }
 
+/* Logo Styling */
 .logo {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #0a2e5c; /* Dark Blue */
+    color: #0a2e5c; 
+    display: flex;
+    align-items: center; 
+    gap: 10px; 
+}
+
+.logo img {
+    height: 40px; 
+    width: auto; 
+    max-height: 50px; 
 }
 
 nav ul {
