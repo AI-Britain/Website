@@ -128,28 +128,29 @@ nav ul li a:hover {
     border-bottom: 2px solid #007bff;
 }
 
-/* Hero Section */
 .hero {
-    background: linear-gradient(rgba(10, 46, 92, 0.8), rgba(10, 46, 92, 0.8)), url('placeholder-hero-bg.jpg'); /* Replace with a real background image */
-    background-color: #0a2e5c; /* Fallback color */
+    background: linear-gradient(rgba(10, 46, 92, 0.8), rgba(10, 46, 92, 0.8)), url('Images/hero background.gif');
+    background-color: #0a2e5c;
     background-size: cover;
     background-position: center;
     color: #fff;
     text-align: center;
-    padding: 6rem 0 4rem 0; /* Adjust padding */
-    min-height: 70vh; /* Give it more height to show visual */
+    padding: 6rem 0 4rem 0; 
+    min-height: 70vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column; /* Stack content vertically */
+    flex-direction: column; t */
+    background-repeat: no-repeat; 
 }
 
 .hero .container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative; /* Needed to ensure content is above the background */
+    z-index: 1; /* Bring content above the background */
 }
-
 
 .hero h1 {
     color: #fff;
