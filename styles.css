@@ -1,3 +1,4 @@
+/* Basic Reset & Global Styles */
 * {
     margin: 0;
     padding: 0;
@@ -5,119 +6,283 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
     color: #333;
+    background-color: #f9f9f9;
 }
 
-/* Header */
+html {
+    scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+h1, h2, h3 {
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    color: #0a2e5c; /* Dark Blue */
+}
+
+h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a4a8a; /* Slightly Lighter Blue */
+}
+
+p {
+    margin-bottom: 1rem;
+    color: #555;
+}
+
+a {
+    text-decoration: none;
+    color: #007bff; /* Standard Link Blue */
+}
+
+img {
+    max-width: 100%; /* Make images responsive */
+    height: auto;
+}
+
+/* Header & Navigation */
 header {
-    background-color: #222;
-    color: white;
-    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 1rem 0;
+    position: sticky; /* Make header stick */
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+}
+
+header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-header .logo h1 {
-    font-size: 2rem;
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #0a2e5c; /* Dark Blue */
 }
 
 nav ul {
     list-style: none;
     display: flex;
-    gap: 20px;
+}
+
+nav ul li {
+    margin-left: 20px;
 }
 
 nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 1.1rem;
+    color: #333;
+    padding: 0.5rem 0.8rem;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+    border-bottom: 2px solid transparent;
+}
+
+nav ul li a:hover {
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
 }
 
 /* Hero Section */
 .hero {
-    background: #006699;
-    color: white;
+    background: linear-gradient(rgba(10, 46, 92, 0.7), rgba(10, 46, 92, 0.7)), url('placeholder-hero-bg.jpg'); /* Replace with a real background image */
+    background-color: #0a2e5c; /* Fallback color */
+    background-size: cover;
+    background-position: center;
+    color: #fff;
     text-align: center;
-    padding: 50px 20px;
+    padding: 6rem 0;
+    min-height: 60vh; /* Give it some height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.hero h2 {
-    font-size: 3rem;
+.hero h1 {
+    color: #fff;
+    margin-bottom: 1rem;
 }
 
 .hero p {
     font-size: 1.2rem;
+    margin-bottom: 2rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    color: rgba(255, 255, 255, 0.9);
 }
 
-/* About Section */
-.about {
-    background: white;
-    padding: 40px 20px;
-    text-align: center;
-}
-
-.about h2 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-}
-
-.about p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-/* Projects Section */
-.projects {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    padding: 40px 20px;
-    background-color: #e9ecef;
-}
-
-.project-card {
-    background: white;
-    padding: 30px;
-    width: 250px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.project-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
-}
-
-.project-card p {
+/* Button Styles */
+.btn {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
     font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3; /* Darker Blue */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* Content Sections */
+.content-section {
+    padding: 4rem 0;
+}
+
+.content-section.alt-bg {
+    background-color: #eef2f7; /* Light grey/blue background */
+}
+
+/* Focus Area Section */
+.focus-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.focus-item {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.focus-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.12);
+}
+
+.focus-icon {
+    max-width: 60px; /* Adjust icon size */
+    height: 60px;
+    margin-bottom: 1rem;
+    /* Use background color for placeholder */
+    background-color: #ddd;
+    border-radius: 50%;
+    display: inline-block; /* Center it */
+    object-fit: cover; /* If using images */
+    border: 1px solid #ccc; /* Example border */
 }
 
 /* Contact Section */
-.contact {
-    background: white;
+#contact {
     text-align: center;
-    padding: 40px 20px;
 }
 
-.contact h2 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-}
-
-.contact p {
-    font-size: 1.2rem;
+#contact p {
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Footer */
 footer {
-    background-color: #222;
-    color: white;
+    background-color: #0a2e5c; /* Dark Blue */
+    color: #ccc;
     text-align: center;
-    padding: 20px;
-    font-size: 1rem;
+    padding: 1.5rem 0;
+    margin-top: 3rem;
+}
+
+footer p {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    .hero {
+        padding: 4rem 0;
+        min-height: auto;
+    }
+
+    header .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .logo {
+        margin-bottom: 1rem;
+    }
+
+    nav ul {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    nav ul li {
+        margin-left: 0;
+        margin-bottom: 0.5rem;
+        width: 100%;
+        text-align: left;
+    }
+
+     nav ul li a {
+        display: block; /* Make links take full width */
+        padding: 0.5rem 0;
+     }
+
+    .focus-grid {
+        grid-template-columns: 1fr; /* Stack items on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 15px; /* Slightly smaller base font */
+    }
+    h1 {
+        font-size: 2rem;
+    }
+    h2 {
+        font-size: 1.6rem;
+    }
+    .container {
+        padding: 0 15px;
+    }
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
 }
