@@ -439,129 +439,177 @@ footer p {
          padding: 0.5rem 0; /* Adjust padding */
      }
 }
-/* Add this new section for the map layers, maybe after your #platform section in styles.css */
-
-/* Wrap this entire section in a content-section */
-.map-layers-section {
-    padding: 4rem 0;
-    text-align: center;
-    background-color: #f9f9f9; /* Or alt-bg like #eef2f7 */
+/* New Section: Map Layers Showcase */
+#map-layers-showcase {
+    padding: 0; /* Remove padding from the section itself to allow wrapper to take full height */
+    overflow: hidden; /* Ensure no extra scrollbars from parent */
+    /* You might want to adjust the background if the first layer doesn't cover it fully */
 }
 
-.map-layers-section h2 {
-    margin-bottom: 3rem;
+#map-layers-showcase .container {
+    padding-top: 4rem; /* Bring back top padding for the intro text */
+    padding-bottom: 2rem; /* Add some space below the intro text */
 }
 
+.section-intro-text {
+    max-width: 800px;
+    margin: 0 auto 3rem auto; /* Center and add margin below */
+    font-size: 1.15rem;
+    color: #333;
+}
 
-.map-layers-container {
+/* The magic container for full-screen vertical scroll snapping */
+.map-layers-wrapper {
+    width: 100vw; /* Take full viewport width */
+    height: calc(100vh - 80px); /* Take full viewport height, minus header height (adjust 80px if your header is different) */
+    overflow-y: scroll; /* Enable vertical scrolling */
+    scroll-snap-type: y mandatory; /* Mandatory vertical snapping */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    margin: 0; /* Remove any default margins */
+    padding: 0; /* Remove any default padding */
+    background-color: #f0f4f8; /* A light background for the scrollable area */
+    border-top: 1px solid #ddd; /* Subtle separator */
+    border-bottom: 1px solid #ddd;
+}
+
+/* Individual full-screen layer slides */
+.map-layer-slide {
+    width: 100%; /* Take full width of its parent */
+    height: calc(100vh - 80px); /* Take full height of its parent (same as wrapper height) */
+    scroll-snap-align: start; /* Snap to the top of each slide */
     display: flex;
-    overflow-x: scroll; /* Use scroll instead of auto for consistent scrollbar behavior */
-    scroll-snap-type: x mandatory; /* Keep mandatory for strong snapping */
-    -webkit-overflow-scrolling: touch; /* For smoother scrolling on iOS */
-    width: 100%;
-    /* Let the height be determined by content or set a min-height */
-    height: 550px; /* Increased height to give more space for image and description */
-    border-radius: 10px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    background-color: #fff;
-    padding: 20px 0; /* Add internal padding */
-    margin-bottom: 2rem; /* Space below the container */
-    scrollbar-width: thin; /* Firefox */
-    scrollbar-color: #007bff #eef2f7; /* Firefox: thumb and track */
+    align-items: center; /* Vertically center content */
+    justify-content: center; /* Horizontally center content */
+    flex-direction: column; /* Stack content vertically */
+    box-sizing: border-box; /* Include padding/border in height */
+    padding: 20px; /* Overall padding for content within the slide */
+    background-color: #ffffff; /* Default background for slides */
+    /* Add subtle alternating backgrounds if desired for visual separation */
 }
 
-/* Custom scrollbar for Webkit browsers (Chrome, Safari) */
-.map-layers-container::-webkit-scrollbar {
-    height: 10px;
-}
-
-.map-layers-container::-webkit-scrollbar-track {
-    background: #eef2f7;
-    border-radius: 10px;
-}
-
-.map-layers-container::-webkit-scrollbar-thumb {
-    background: #007bff;
-    border-radius: 10px;
-    border: 2px solid #eef2f7; /* Adds a border to the thumb */
-}
-
-.map-layers-container::-webkit-scrollbar-thumb:hover {
-    background: #0056b3;
+/* Alternating background for better visual separation */
+.map-layer-slide:nth-child(even) {
+    background-color: #eef2f7; /* Your alt-bg color */
 }
 
 
-.map-layer {
-    flex: 0 0 100%; /* Each layer takes full width of the container */
-    scroll-snap-align: center; /* Snap to the center of each layer for a better visual stop */
+.slide-content {
+    max-width: 900px; /* Max width for the content within each slide */
+    width: 90%; /* Responsive width */
     display: flex;
-    flex-direction: column;
+    flex-direction: row; /* Image and description side-by-side */
     align-items: center;
-    justify-content: center;
-    padding: 20px; /* Padding inside each slide */
-    box-sizing: border-box;
-    text-align: center;
-    /* Optional: Add a subtle border or background to differentiate layers if needed */
-    /* border-right: 1px solid #eee; */
+    gap: 40px; /* Space between image and description */
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Shadow on content card */
+    border-radius: 12px;
+    background-color: #fff; /* Ensure content card is white */
 }
 
-.map-layer img {
-    max-width: 90%; /* Give image more space */
-    max-height: 350px; /* Control image height */
+/* Adjust for image and description sizing within the slide-content */
+.layer-image {
+    flex: 1; /* Allows image to take available space */
+    max-width: 50%; /* Image takes up to 50% of the slide-content width */
     height: auto; /* Maintain aspect ratio */
-    object-fit: contain; /* Ensure image fits without cropping */
-    margin-bottom: 20px; /* More space below image */
-    border-radius: 8px; /* Slightly rounded corners for images */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Subtle shadow on images */
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .layer-description {
-    max-width: 700px; /* Limit width of description for readability */
-    color: #555;
+    flex: 1; /* Allows description to take available space */
+    max-width: 50%; /* Description takes up to 50% of the slide-content width */
+    text-align: left; /* Align text to the left within its column */
+    color: #333;
 }
 
 .layer-description h3 {
-    font-size: 1.8rem; /* Slightly larger heading for prominence */
-    margin-bottom: 10px;
+    font-size: 2.2rem;
     color: #0a2e5c;
+    margin-bottom: 15px;
+    line-height: 1.2;
 }
 
 .layer-description p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    margin-bottom: 0; /* Remove default paragraph margin if not needed */
+    font-size: 1.15rem;
+    line-height: 1.7;
 }
 
-/* Optional: Add navigation indicators (dots) using CSS only (more complex, often needs JS) */
-/* For strictly CSS, you'd typically have to layer elements or use radio buttons, which can be less flexible */
+/* Hide scrollbar for a cleaner look (optional, but common for this effect) */
+.map-layers-wrapper::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari, Opera */
+}
 
-/* Responsive adjustments for smaller screens */
-@media (max-width: 768px) {
-    .map-layers-container {
-        height: 450px; /* Adjust height for smaller screens */
-        padding: 10px 0;
+.map-layers-wrapper {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 992px) { /* Adjust layout for tablets */
+    .slide-content {
+        flex-direction: column; /* Stack image and description vertically */
+        text-align: center;
+        gap: 20px;
+        max-width: 80%; /* Wider on tablet to use space */
     }
-    .map-layer img {
-        max-height: 250px;
-        margin-bottom: 15px;
+    .layer-image,
+    .layer-description {
+        max-width: 100%; /* Take full width when stacked */
+    }
+    .layer-description {
+        text-align: center; /* Center text when stacked */
     }
     .layer-description h3 {
-        font-size: 1.5rem;
+        font-size: 2rem;
+    }
+    .layer-description p {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 768px) { /* Further adjustments for smaller tablets and phones */
+    .map-layers-wrapper {
+        height: calc(100vh - 70px); /* Adjust for potentially smaller header on mobile */
+    }
+    .map-layer-slide {
+        height: calc(100vh - 70px);
+        padding: 15px;
+    }
+    .slide-content {
+        padding: 20px;
+        gap: 15px;
+        max-width: 95%;
+    }
+    .layer-image {
+        max-height: 250px; /* Constrain image height on small screens */
+    }
+    .layer-description h3 {
+        font-size: 1.8rem;
     }
     .layer-description p {
         font-size: 1rem;
     }
 }
 
-@media (max-width: 480px) {
-    .map-layers-container {
-        height: 380px; /* Further adjust for very small screens */
+@media (max-width: 480px) { /* Mobile-specific */
+    .map-layers-wrapper {
+        height: calc(100vh - 60px); /* Smallest header */
     }
-    .map-layer img {
+    .map-layer-slide {
+        height: calc(100vh - 60px);
+        padding: 10px;
+    }
+    .slide-content {
+        padding: 15px;
+        gap: 10px;
+    }
+    .layer-image {
         max-height: 200px;
     }
     .layer-description h3 {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
     }
     .layer-description p {
         font-size: 0.95rem;
