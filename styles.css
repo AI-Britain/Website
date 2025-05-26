@@ -439,3 +439,131 @@ footer p {
          padding: 0.5rem 0; /* Adjust padding */
      }
 }
+/* Add this new section for the map layers, maybe after your #platform section in styles.css */
+
+/* Wrap this entire section in a content-section */
+.map-layers-section {
+    padding: 4rem 0;
+    text-align: center;
+    background-color: #f9f9f9; /* Or alt-bg like #eef2f7 */
+}
+
+.map-layers-section h2 {
+    margin-bottom: 3rem;
+}
+
+
+.map-layers-container {
+    display: flex;
+    overflow-x: scroll; /* Use scroll instead of auto for consistent scrollbar behavior */
+    scroll-snap-type: x mandatory; /* Keep mandatory for strong snapping */
+    -webkit-overflow-scrolling: touch; /* For smoother scrolling on iOS */
+    width: 100%;
+    /* Let the height be determined by content or set a min-height */
+    height: 550px; /* Increased height to give more space for image and description */
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    background-color: #fff;
+    padding: 20px 0; /* Add internal padding */
+    margin-bottom: 2rem; /* Space below the container */
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #007bff #eef2f7; /* Firefox: thumb and track */
+}
+
+/* Custom scrollbar for Webkit browsers (Chrome, Safari) */
+.map-layers-container::-webkit-scrollbar {
+    height: 10px;
+}
+
+.map-layers-container::-webkit-scrollbar-track {
+    background: #eef2f7;
+    border-radius: 10px;
+}
+
+.map-layers-container::-webkit-scrollbar-thumb {
+    background: #007bff;
+    border-radius: 10px;
+    border: 2px solid #eef2f7; /* Adds a border to the thumb */
+}
+
+.map-layers-container::-webkit-scrollbar-thumb:hover {
+    background: #0056b3;
+}
+
+
+.map-layer {
+    flex: 0 0 100%; /* Each layer takes full width of the container */
+    scroll-snap-align: center; /* Snap to the center of each layer for a better visual stop */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px; /* Padding inside each slide */
+    box-sizing: border-box;
+    text-align: center;
+    /* Optional: Add a subtle border or background to differentiate layers if needed */
+    /* border-right: 1px solid #eee; */
+}
+
+.map-layer img {
+    max-width: 90%; /* Give image more space */
+    max-height: 350px; /* Control image height */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: contain; /* Ensure image fits without cropping */
+    margin-bottom: 20px; /* More space below image */
+    border-radius: 8px; /* Slightly rounded corners for images */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Subtle shadow on images */
+}
+
+.layer-description {
+    max-width: 700px; /* Limit width of description for readability */
+    color: #555;
+}
+
+.layer-description h3 {
+    font-size: 1.8rem; /* Slightly larger heading for prominence */
+    margin-bottom: 10px;
+    color: #0a2e5c;
+}
+
+.layer-description p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 0; /* Remove default paragraph margin if not needed */
+}
+
+/* Optional: Add navigation indicators (dots) using CSS only (more complex, often needs JS) */
+/* For strictly CSS, you'd typically have to layer elements or use radio buttons, which can be less flexible */
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .map-layers-container {
+        height: 450px; /* Adjust height for smaller screens */
+        padding: 10px 0;
+    }
+    .map-layer img {
+        max-height: 250px;
+        margin-bottom: 15px;
+    }
+    .layer-description h3 {
+        font-size: 1.5rem;
+    }
+    .layer-description p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .map-layers-container {
+        height: 380px; /* Further adjust for very small screens */
+    }
+    .map-layer img {
+        max-height: 200px;
+    }
+    .layer-description h3 {
+        font-size: 1.3rem;
+    }
+    .layer-description p {
+        font-size: 0.95rem;
+    }
+}
