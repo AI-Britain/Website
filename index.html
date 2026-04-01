@@ -1,146 +1,1168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Britain - Data-Driven Development</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Britain CIC — Technology for the Common Good</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=IBM+Plex+Mono:wght@300;400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0c;
+    --paper: #f5f0e8;
+    --cream: #ede8db;
+    --stone: #c8bfaa;
+    --rust: #b84a2e;
+    --slate: #3a4a5c;
+    --gold: #c8952a;
+    --pale: #faf7f2;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── MASTHEAD ─────────────────────────────────── */
+  .masthead {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 3px solid var(--rust);
+  }
+
+  .masthead-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 64px;
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--paper);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .logo-mark {
+    width: 32px;
+    height: 32px;
+    background: var(--rust);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: white;
+    letter-spacing: 0;
+    flex-shrink: 0;
+  }
+
+  .logo span {
+    color: var(--stone);
+    font-weight: 400;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    font-family: 'IBM Plex Mono', monospace;
+    text-transform: uppercase;
+    margin-left: 0.3rem;
+  }
+
+  nav {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  nav a {
+    color: var(--stone);
+    text-decoration: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--paper); }
+
+  nav .nav-cta {
+    background: var(--rust);
+    color: white;
+    padding: 0.4rem 1rem;
+    font-size: 0.7rem;
+    transition: background 0.2s;
+  }
+
+  nav .nav-cta:hover { background: #9a3a22; color: white; }
+
+  /* ── HERO ─────────────────────────────────── */
+  .hero {
+    background: var(--ink);
+    background-image: url("Images/hero background.gif");
+    color: var(--paper);
+    min-height: 92vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(255,255,255,0.03) 80px),
+      repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(255,255,255,0.03) 80px);
+    pointer-events: none;
+  }
+
+  .hero-text {
+    padding: 6rem 3rem 6rem 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--rust);
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    line-height: 1.05;
+    font-weight: 900;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-lead {
+    font-size: 1.1rem;
+    line-height: 1.75;
+    color: var(--stone);
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--rust);
+    color: white;
+    padding: 0.85rem 2rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { background: #9a3a22; transform: translateY(-1px); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--paper);
+    padding: 0.85rem 2rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.25);
+    transition: border-color 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+
+  .btn-secondary:hover { border-color: var(--paper); transform: translateY(-1px); }
+
+  .hero-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 3rem;
+  }
+
+  .hero-stat-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .stat-card {
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 1.5rem;
+    background: rgba(255,255,255,0.03);
+    position: relative;
+    animation: fadeSlide 0.6s ease both;
+  }
+
+  .stat-card:nth-child(1) { animation-delay: 0.3s; }
+  .stat-card:nth-child(2) { animation-delay: 0.5s; margin-left: 2rem; }
+  .stat-card:nth-child(3) { animation-delay: 0.7s; }
+
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--rust);
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--paper);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+
+  /* ── MISSION STRIP ─────────────────────────── */
+  .mission-strip {
+    background: var(--rust);
+    color: white;
+    padding: 1.5rem 5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    text-align: center;
+    letter-spacing: 0.01em;
+  }
+
+  /* ── SECTION BASE ─────────────────────────── */
+  section {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 6rem 3rem;
+  }
+
+  .section-header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: start;
+    margin-bottom: 4rem;
+  }
+
+  .section-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust);
+    padding-top: 0.4rem;
+    white-space: nowrap;
+  }
+
+  .section-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  .section-heading em {
+    font-style: italic;
+    color: var(--rust);
+  }
+
+  /* ── ABOUT ─────────────────────────────────── */
+  #about {
+    background: var(--pale);
+    max-width: 100%;
+    padding: 6rem 0;
+  }
+
+  #about .inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 3rem;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .about-copy p {
+    margin-bottom: 1.25rem;
+    font-size: 1.05rem;
+    color: #2a2a2a;
+  }
+
+  .about-copy p:first-child {
+    font-size: 1.25rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  .about-pillars {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .pillar {
+    border-top: 1px solid var(--stone);
+    padding: 1.5rem 0;
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 1rem;
+  }
+
+  .pillar:last-child { border-bottom: 1px solid var(--stone); }
+
+  .pillar-icon {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--rust);
+    font-weight: 500;
+    padding-top: 0.2rem;
+  }
+
+  .pillar h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+
+  .pillar p {
+    font-size: 0.9rem;
+    color: #4a4a4a;
+    line-height: 1.6;
+  }
+
+  /* ── PLATFORM ──────────────────────────────── */
+  #platform {
+    padding: 6rem 3rem;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--stone);
+  }
+
+  .feature {
+    padding: 2.5rem;
+    border-right: 1px solid var(--stone);
+    position: relative;
+  }
+
+  .feature:last-child { border-right: none; }
+  .feature:nth-child(4), .feature:nth-child(5), .feature:nth-child(6) {
+    border-top: 1px solid var(--stone);
+  }
+
+  .feature-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 1rem;
+  }
+
+  .feature h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .feature p {
+    font-size: 0.9rem;
+    color: #4a4a4a;
+    line-height: 1.65;
+  }
+
+  /* ── CARNEGIE PROJECT ─────────────────────── */
+  #carnegie {
+    background: var(--ink);
+    color: var(--paper);
+    max-width: 100%;
+    padding: 7rem 0;
+  }
+
+  #carnegie .inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 3rem;
+  }
+
+  #carnegie .section-heading {
+    color: var(--paper);
+  }
+
+  #carnegie .section-heading em {
+    color: var(--gold);
+  }
+
+  #carnegie .section-num { color: var(--gold); }
+
+  .carnegie-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .carnegie-copy p {
+    color: var(--stone);
+    font-size: 1.05rem;
+    margin-bottom: 1.25rem;
+    line-height: 1.75;
+  }
+
+  .carnegie-copy p strong {
+    color: var(--paper);
+    font-weight: 600;
+  }
+
+  .carnegie-quote {
+    border-left: 3px solid var(--gold);
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .carnegie-quote blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--paper);
+    line-height: 1.5;
+  }
+
+  .carnegie-quote cite {
+    display: block;
+    margin-top: 0.75rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-style: normal;
+  }
+
+  .carnegie-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .detail-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .detail-box {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 1.5rem;
+  }
+
+  .detail-box-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .detail-box-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--paper);
+    line-height: 1.4;
+  }
+
+  .carnegie-programme-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .carnegie-programme-list li {
+    padding: 1rem 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: grid;
+    grid-template-columns: 1.5rem 1fr;
+    gap: 1rem;
+    color: var(--stone);
+    font-size: 0.95rem;
+  }
+
+  .carnegie-programme-list li:last-child { border-bottom: 1px solid rgba(255,255,255,0.1); }
+
+  .carnegie-programme-list li::before {
+    content: '→';
+    color: var(--rust);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* ── FOR WHOM ─────────────────────────────── */
+  #audiences {
+    background: var(--cream);
+    max-width: 100%;
+    padding: 6rem 0;
+  }
+
+  #audiences .inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 3rem;
+  }
+
+  .audience-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--stone);
+  }
+
+  .audience-card {
+    background: var(--paper);
+    padding: 2.5rem;
+  }
+
+  .audience-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--rust);
+  }
+
+  .audience-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .audience-card ul li {
+    font-size: 0.9rem;
+    color: #3a3a3a;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .audience-card ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--rust);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* ── CONTACT ──────────────────────────────── */
+  #contact {
+    background: var(--pale);
+    max-width: 100%;
+    padding: 6rem 0;
+  }
+
+  #contact .inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .contact-lead {
+    font-size: 1.05rem;
+    color: #3a3a3a;
+    margin-bottom: 2rem;
+  }
+
+  .contact-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .contact-method {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .contact-method-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--rust);
+    min-width: 5rem;
+  }
+
+  .contact-method a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--stone);
+    transition: border-color 0.2s;
+  }
+
+  .contact-method a:hover { border-color: var(--rust); }
+
+  .contact-form-area {
+    background: white;
+    padding: 2.5rem;
+    border: 1px solid var(--stone);
+  }
+
+  .contact-form-area h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #5a5a5a;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--stone);
+    background: var(--pale);
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--rust);
+  }
+
+  .form-group textarea { height: 120px; resize: vertical; }
+
+  .form-submit {
+    width: 100%;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 0.9rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .form-submit:hover { background: var(--rust); }
+
+  /* ── FOOTER ───────────────────────────────── */
+  footer {
+    background: var(--ink);
+    color: var(--stone);
+    padding: 3rem 5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 3px solid var(--rust);
+  }
+
+  .footer-left {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+  }
+
+  .footer-left strong {
+    display: block;
+    color: var(--paper);
+    font-size: 0.85rem;
+    margin-bottom: 0.3rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .footer-links a {
+    color: var(--stone);
+    text-decoration: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--paper); }
+
+  /* ── DIVIDER ──────────────────────────────── */
+  .ruled-divider {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 3rem;
+    border: none;
+    border-top: 1px solid var(--stone);
+  }
+
+  /* ── ANIMATIONS ───────────────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ── RESPONSIVE ───────────────────────────── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-visual { display: none; }
+    .hero-text { padding: 4rem 2rem; }
+    .about-grid, .carnegie-layout, #contact .inner { grid-template-columns: 1fr; gap: 3rem; }
+    .features-grid, .audience-cards { grid-template-columns: 1fr; }
+    .feature { border-right: none; border-bottom: 1px solid var(--stone); }
+    footer { flex-direction: column; gap: 2rem; text-align: center; padding: 2rem; }
+    nav { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .mission-strip { padding: 1.5rem 2rem; }
+  }
+</style>
 </head>
 <body>
 
-    <header>
-        <div class="container">
-            <div class="logo">
-                <img src="Images/ai britain logo no text.png" alt="AI Britain Logo">
-                AI Britain
-            </div>
-               <nav>
-                <ul>
-                    <li><a href="index.html#about">About Us</a></li>
-                    <li><a href="index.html#platform">Platform</a></li>
-                    <li><a href="index.html#data-methodology">Data & Methodology</a></li>
-                    <li><a href="index.html#donors">For Donors</a></li>
-                    <li><a href="index.html#partners">For Partners</a></li>
-                    <li><a href="index.html#researchers">For Researchers</a></li>
-                    <li><a href="index.html#contact">Contact</a></li>
-                </ul>
-            </nav>
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <a href="#" class="logo">
+      <div class="logo-mark"><img src="Images/ai britain logo no text.png"></div>
+      AI Britain
+      <span>CIC</span>
+    </a>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#platform">Platform</a>
+      <a href="#carnegie">Carnegie Project</a>
+      <a href="#audiences">Who We Serve</a>
+      <a href="#contact" class="nav-cta">Get in Touch</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Community Interest Company · Registered in England & Wales</div>
+    <h1>Technology<br>for the<br>Common Good.</h1>
+    <p class="hero-lead">AI Britain CIC puts artificial intelligence in the hands of people who need it most — free tools, free training, and free access to the digital economy for unemployed and low-income communities across Britain.</p>
+    <div class="hero-actions">
+      <a href="#about" class="btn-primary">Our Mission</a>
+      <a href="#carnegie" class="btn-secondary">Carnegie Project</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-stat-stack">
+      <div class="stat-card">
+        <div class="stat-number">Free</div>
+        <div class="stat-label">All services for unemployed & low-income users</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">AI</div>
+        <div class="stat-label">Tools for career development, innovation & research</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">CIC</div>
+        <div class="stat-label">Community Interest Company — profit locked for social purpose</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MISSION STRIP -->
+<div class="mission-strip">
+  "The man who dies rich, dies disgraced." — Andrew Carnegie, 1889
+</div>
+
+<!-- ABOUT -->
+<div id="about">
+  <div class="inner">
+    <div class="section-header reveal">
+      <div class="section-num">01 / About</div>
+      <h2 class="section-heading">We exist to close<br>the <em>AI divide.</em></h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-copy reveal">
+        <p>AI Britain CIC was founded on a straightforward conviction: the benefits of artificial intelligence must not be reserved for those who can afford them.</p>
+        <p>We provide free, practical AI education and tools to people who are unemployed, in low-income households, or living in digitally underserved communities. Our focus is on young people — the generation that will either benefit from or be displaced by AI, depending largely on the opportunities available to them now.</p>
+        <p>As a Community Interest Company, every penny of surplus is locked to our social purpose. We do not exist to extract value from communities. We exist to build it there.</p>
+      </div>
+      <div class="about-pillars reveal">
+        <div class="pillar">
+          <div class="pillar-icon">01</div>
+          <div>
+            <h4>Free AI Tools & Training</h4>
+            <p>Hands-on access to AI platforms for career development, content creation, and research — at no cost to participants.</p>
+          </div>
         </div>
-    </header>
-
-    <main>
-        <section class="hero">
-            <div class="container">
-                <h1>Data-Driven Development: Mapping Impact, Empowering Communities.</h1>
-                <p>Our AI-powered platform visualises development projects, analyses impact data from partners, and provides contextual insights to help donors, agencies, and communities build a more prosperous future in the world's least developed countries.</p>
-                <div class="hero-ctas">
-                    <a href="#contact" class="btn">Request a Demo</a>
-                    <a href="#platform" class="btn btn-secondary">Explore the Platform</a>
-                    <a href="#partners" class="btn btn-secondary">Partner With Us</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="about" class="content-section">
-            <div class="container">
-                <h2>About AI Britain</h2>
-                <h3>Mission</h3>
-                <p>To bring transparency, accountability, and data-driven insights to global development, connecting donor investments to measurable community prosperity.</p>
-                <h3>Vision</h3>
-                <p>A world where development efforts are effectively targeted, collaboratively implemented, and demonstrably improve lives in the most underserved regions.</p>
-                <h3>Our Approach</h3>
-                <p>We integrate project information from NGOs and Aid Agencies with extensive geospatial and socio-economic data. Using interactive mapping and AI-assisted analysis, we provide a holistic view of the development landscape, identify needs, track progress, and surface insights to inform better decision-making. We believe in the power of collaboration and data to maximize positive impact.</p>
-            </div>
-        </section>
-        <section id="platform" class="content-section alt-bg">
-            <div class="container">
-                <h2>Platform Features</h2>
-                <div class="feature-grid">
-                    <div class="feature-item">
-                        <h3>Interactive Global Map</h3>
-                        <p>Visualise thousands of development projects from diverse partners across LDCs. Layer crucial contextual data – climate vulnerability, population density, resource access (water, electricity), infrastructure (roads, schools, clinics), conflict zones, arable land, and more – down to the local level.</p>
-                    </div>
-                    <div class="feature-item">
-                        <h3>Project Impact Tracking (Powered by Partner Data)</h3>
-                        <p>Access and explore information on project goals, activities, and reported outcomes, primarily sourced from the impact and annual reports of our NGO and Agency partners. See where specific interventions are happening and understand their stated results.</p>
-                    </div>
-                     <div class="feature-item">
-                        <h3>AI-Powered Contextual Insights</h3>
-                        <p>Our AI analyses vast datasets – environmental conditions, socio-economic indicators, resource availability, education levels, and reported project outcomes – to identify patterns and correlations. It generates insights tailored to specific country contexts, helping users understand potential needs, opportunities, and factors influencing project success. (Note: Carefully phrase this to avoid over-promising prescription) Example: "Discover insights like 'Regions with condition X often show correlation Y when intervention Z is present'."</p>
-                    </div>
-                     <div class="feature-item">
-                        <h3>Data Contribution & Collaboration</h3>
-                        <p>Verified partners can contribute project data, field reports, and updates, enriching the platform for everyone. Foster collaboration between organisations working in the same areas.</p>
-                    </div>
-                     <div class="feature-item">
-                        <h3>Customizable Dashboards & Reporting</h3>
-                        <p>Tailor your view. Donors can track their portfolio's footprint; Agencies can monitor their projects against contextual data; Researchers can analyse trends.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="data-methodology" class="content-section">
-             <div class="container">
-                <h2>Data & Methodology</h2>
-                <h3>Our Data Sources</h3>
-                <ul>
-                    <li><strong>Partner Reports:</strong> Project details and impact narratives provided by participating NGOs and Aid Agencies through their reporting.</li>
-                    <li><strong>Geospatial Data:</strong> Satellite imagery analysis, climate data, infrastructure mapping, population grids (citing sources like WorldPop, NASA, ESA, OpenStreetMap etc.).</li>
-                    <li><strong>Public Datasets:</strong> National statistics, socio-economic indicators from reputable sources (World Bank, UN agencies, etc.).</li>
-                    <li><strong>User Contributions:</strong> Verified updates from partners on the ground.</li>
-                </ul>
-                <h3>Data Processing & Validation</h3>
-                <p>Learn how we use NLP to extract information from reports and employ methods to cross-reference and validate data for reliability. We prioritize transparency in our data quality assessments.</p>
-                 <h3>Responsible AI</h3>
-                <p>Our AI is designed as an analytical assistant to surface patterns and potential insights from complex data. It supports, rather than replaces, human expertise. Recommendations are context-aware suggestions intended for evaluation by development professionals and local stakeholders. We are committed to ethical AI practices and mitigating bias.</p>
-                 <h3>Data Privacy & Security</h3>
-                <p>We adhere to strict protocols to protect sensitive data and ensure the privacy of individuals and communities.</p>
-             </div>
-        </section>
-
-         <section id="donors" class="content-section alt-bg">
-             <div class="container">
-                 <h2>For Donors</h2>
-                 <p><strong>Invest with Confidence, See Your Impact.</strong></p>
-                 <p>Visualise where your funds are working on the map. Understand the context in which your projects operate. Access consolidated reporting insights (based on partner data). Identify gaps and opportunities for future funding. Enhance accountability and transparency for your stakeholders.</p>
-             </div>
-         </section>
-
-         <section id="partners" class="content-section">
-             <div class="container">
-                 <h2>For NGOs & Aid Agencies (Partners)</h2>
-                 <p><strong>Showcase Your Work, Enhance Your Strategy.</strong></p>
-                 <p>Place your projects on the map for donors and collaborators to see. Use contextual data layers to inform your program design and implementation. Benchmark reported outcomes against regional patterns (using AI insights). Identify potential partners working nearby. (Future possibility: Streamline reporting by contributing data directly).</p>
-             </div>
-         </section>
-
-         <section id="researchers" class="content-section alt-bg">
-             <div class="container">
-                 <h2>For Researchers & Governments</h2>
-                 <p><strong>Unlocking Development Data for Analysis and Planning.</strong></p>
-                 <p>Analyse trends, evaluate intervention patterns, and support evidence-based policy and planning. Utilize map layers for spatial analysis.</p>
-             </div>
-         </section>
-
-
-        <section id="contact" class="content-section">
-            <div class="container">
-                <h2>Get in Touch</h2>
-                <p>Interested in learning more about our work, exploring potential collaborations, or requesting a demo?</p>
-                <p> Email us at abbie@aibritain.org</p>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 AI Britain. All rights reserved.</p>
+        <div class="pillar">
+          <div class="pillar-icon">02</div>
+          <div>
+            <h4>Youth-Led Innovation</h4>
+            <p>Dedicated programmes for young people to build skills, launch ideas, and enter the digital economy on their own terms.</p>
+          </div>
         </div>
-    </footer>
+        <div class="pillar">
+          <div class="pillar-icon">03</div>
+          <div>
+            <h4>Data for Development</h4>
+            <p>AI-powered mapping and impact analysis to help donors, agencies, and communities direct resources where they matter most.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">04</div>
+          <div>
+            <h4>Community Infrastructure</h4>
+            <p>Physical spaces — from library pods to innovation centres — designed to make digital participation genuinely accessible.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="ruled-divider">
+
+<!-- PLATFORM -->
+<section id="platform">
+  <div class="section-header reveal">
+    <div class="section-num">02 / Platform</div>
+    <h2 class="section-heading">What we<br><em>build and offer.</em></h2>
+  </div>
+  <div class="features-grid reveal">
+    <div class="feature">
+      <div class="feature-tag">Global Development</div>
+      <h3>Interactive Impact Map</h3>
+      <p>Visualise thousands of development projects from NGOs and aid agencies across least-developed countries, layered with geospatial, climate, and socio-economic data down to community level.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-tag">AI Analysis</div>
+      <h3>Contextual Insights Engine</h3>
+      <p>Our AI analyses environmental conditions, socio-economic indicators, and project outcomes to surface patterns and correlations that inform better decision-making by donors and implementers.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-tag">Transparency</div>
+      <h3>Project Tracking & Reporting</h3>
+      <p>Access goals, activities, and reported outcomes from partner organisations. Customisable dashboards for donors to track portfolio footprint and agencies to monitor programmes in real time.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-tag">Community Access</div>
+      <h3>Free AI Tools for Individuals</h3>
+      <p>Practical AI tools for CV writing, interview preparation, skills development, and content creation — available at no charge to unemployed and low-income users across the UK.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-tag">Digital Hubs</div>
+      <h3>Library Technology Pods</h3>
+      <p>Purpose-built technology spaces in public libraries — branded 1984 — bringing AI access to communities at no capital cost to local councils. Pilot: Westminster.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-tag">Innovation Centres</div>
+      <h3>Physical AI Spaces</h3>
+      <p>Flagship community innovation centres providing studio space, AI workstations, and mentorship for young people in content creation, entrepreneurship, and digital research.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CARNEGIE PROJECT -->
+<div id="carnegie">
+  <div class="inner">
+    <div class="section-header reveal">
+      <div class="section-num">03 / Carnegie Project</div>
+      <h2 class="section-heading"><em>Carnegie:</em> Moral Philosophy<br>& Values in the Digital Age</h2>
+    </div>
+    <div class="carnegie-layout">
+      <div class="carnegie-copy reveal">
+        <p>In 1892, Scottish-American industrialist Andrew Carnegie built a public library on Rosemount Viaduct, Aberdeen — free to all, regardless of class or income. His conviction was that access to knowledge was the foundation of human advancement.</p>
+        <p>Next door stands St Mark's Church — Carnegie's architectural neighbour — now vacant for five years and listed for sale by the Church of Scotland. <strong>AI Britain CIC proposes to acquire and convert this building into Scotland's first dedicated community AI innovation centre for young people,</strong> named in honour of Carnegie's philosophy.</p>
+        <div class="carnegie-quote">
+          <blockquote>"The library next door gave free access to books in 1892. The Carnegie Centre will give free access to artificial intelligence in the same spirit, in the same street, 133 years later."</blockquote>
+          <cite>AI Britain CIC, Proposal to the General Trustees, 2025</cite>
+        </div>
+        <p>The centre will serve young Scots from low-income and unemployed backgrounds — providing AI workstations, a dedicated content creation studio, entrepreneurship programmes, and research facilities. All services will be free at the point of use.</p>
+        <p>We are seeking a partnership with the Church of Scotland that reflects the shared values embedded in this building's history: community service, access to knowledge, and investment in the next generation.</p>
+        <a href="#contact" class="btn-primary" style="margin-top:1rem; display:inline-block;">Express Interest in Partnering</a>
+      </div>
+      <div class="carnegie-details reveal">
+        <div class="detail-row">
+          <div class="detail-box">
+            <div class="detail-box-label">Building</div>
+            <div class="detail-box-value">St Mark's Church, Rosemount Viaduct, Aberdeen</div>
+          </div>
+          <div class="detail-box">
+            <div class="detail-box-label">Built</div>
+            <div class="detail-box-value">1892 — Category B Listed</div>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-box">
+            <div class="detail-box-label">Asking Price</div>
+            <div class="detail-box-value">Offers over £320,000</div>
+          </div>
+          <div class="detail-box">
+            <div class="detail-box-label">Vacant Since</div>
+            <div class="detail-box-value">Approximately 5 years</div>
+          </div>
+        </div>
+        <ul class="carnegie-programme-list">
+          <li>Free AI tools and training for unemployed young people</li>
+          <li>Dedicated content creation studio with professional equipment</li>
+          <li>Social media and digital entrepreneurship mentorship</li>
+          <li>Research access for students and early-career innovators</li>
+          <li>Community event and exhibition space</li>
+          <li>Partnership with Aberdeen University and local schools</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AUDIENCES -->
+<div id="audiences">
+  <div class="inner">
+    <div class="section-header reveal">
+      <div class="section-num">04 / Who We Serve</div>
+      <h2 class="section-heading">Built for people,<br><em>not profit.</em></h2>
+    </div>
+    <div class="audience-cards reveal">
+      <div class="audience-card">
+        <h3>Young People</h3>
+        <ul>
+          <li>Free AI tools for career development</li>
+          <li>Content creation studio access</li>
+          <li>Digital entrepreneurship programmes</li>
+          <li>Research support and mentorship</li>
+          <li>No prior experience required</li>
+        </ul>
+      </div>
+      <div class="audience-card">
+        <h3>Donors & Funders</h3>
+        <ul>
+          <li>Transparent impact tracking on the map</li>
+          <li>AI-powered portfolio analysis</li>
+          <li>Consolidated reporting from partner data</li>
+          <li>Gap identification for future funding</li>
+          <li>Full accountability architecture</li>
+        </ul>
+      </div>
+      <div class="audience-card">
+        <h3>NGOs & Researchers</h3>
+        <ul>
+          <li>Showcase projects on the global map</li>
+          <li>Access contextual data layers for programme design</li>
+          <li>Identify partners working in adjacent areas</li>
+          <li>Contribute and cross-reference field data</li>
+          <li>Spatial analysis for evidence-based policy</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact">
+  <div class="inner">
+    <div class="reveal">
+      <div class="section-header">
+        <div class="section-num">05 / Contact</div>
+        <h2 class="section-heading">Partner with<br><em>AI Britain CIC.</em></h2>
+      </div>
+      <p class="contact-lead">Whether you are a funder, a local authority, a community organisation, or an individual who wants to get involved — we want to hear from you.</p>
+      <div class="contact-methods">
+        <div class="contact-method">
+          <span class="contact-method-label">Email</span>
+          <a href="mailto:abbie@aibritain.org">abbie@aibritain.org</a>
+        </div>
+        <div class="contact-method">
+          <span class="contact-method-label">Web</span>
+          <a href="https://www.aibritain.org">www.aibritain.org</a>
+        </div>
+        <div class="contact-method">
+          <span class="contact-method-label">Status</span>
+          <span>Community Interest Company — England & Wales</span>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form-area reveal">
+      <h3>Send an Enquiry</h3>
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" placeholder="Full name">
+      </div>
+      <div class="form-group">
+        <label>Organisation</label>
+        <input type="text" placeholder="Organisation or institution">
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label>I am enquiring as a</label>
+        <select>
+          <option>— Select —</option>
+          <option>Funder or Donor</option>
+          <option>Local Authority</option>
+          <option>NGO or Partner Organisation</option>
+          <option>Researcher or Academic</option>
+          <option>Young Person seeking access</option>
+          <option>Media or Press</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea placeholder="Tell us how you'd like to work together..."></textarea>
+      </div>
+      <button class="form-submit">Send Enquiry</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <strong>AI Britain CIC</strong>
+    Community Interest Company · Registered in England & Wales<br>
+    © 2025 AI Britain. All rights reserved.
+  </div>
+  <div class="footer-links">
+    <a href="#about">About</a>
+    <a href="#platform">Platform</a>
+    <a href="#carnegie">Carnegie Project</a>
+    <a href="#contact">Contact</a>
+    <a href="mailto:abbie@aibritain.org">Email Us</a>
+  </div>
+</footer>
+
+<script>
+  // Intersection Observer for reveal animations
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>
