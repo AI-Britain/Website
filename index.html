@@ -5,665 +5,851 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Britain CIC — Technology for the Common Good</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=IBM+Plex+Mono:wght@300;400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@200;300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #0f0e0c;
-    --paper: #f5f0e8;
-    --cream: #ede8db;
-    --stone: #c8bfaa;
-    --rust: #b84a2e;
-    --slate: #3a4a5c;
-    --gold: #c8952a;
-    --pale: #faf7f2;
+    --emerald-deep: #062d1b;
+    --emerald: #0a4a2e;
+    --emerald-mid: #0f6b42;
+    --emerald-bright: #10b981;
+    --emerald-glow: #34d399;
+    --mint: #a7f3d0;
+    --cream: #f0fdf4;
+    --gold: #fbbf24;
+    --gold-soft: #fef3c7;
+    --white: #ffffff;
+    --white-10: rgba(255,255,255,0.1);
+    --white-20: rgba(255,255,255,0.2);
+    --white-40: rgba(255,255,255,0.4);
+    --white-60: rgba(255,255,255,0.6);
+    --white-80: rgba(255,255,255,0.8);
+    --white-90: rgba(255,255,255,0.9);
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
 
   body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: 'Source Serif 4', Georgia, serif;
-    font-size: 18px;
+    background: var(--emerald-deep);
+    color: var(--white);
+    font-family: 'Outfit', sans-serif;
+    font-size: 17px;
     line-height: 1.7;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
 
-  /* ── MASTHEAD ─────────────────────────────────── */
+  /* ── GRAIN OVERLAY ────────────────────────── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.5;
+  }
+
+  /* ── AMBIENT GLOW BLOBS ───────────────────── */
+  .glow {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.3;
+  }
+
+  .glow-1 {
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, #10b981 0%, transparent 70%);
+    top: -200px; right: -100px;
+    animation: drift1 20s ease-in-out infinite;
+  }
+
+  .glow-2 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, #059669 0%, transparent 70%);
+    bottom: 20%; left: -150px;
+    animation: drift2 25s ease-in-out infinite;
+  }
+
+  .glow-3 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, #fbbf24 0%, transparent 70%);
+    top: 40%; right: -100px;
+    opacity: 0.12;
+    animation: drift3 18s ease-in-out infinite;
+  }
+
+  @keyframes drift1 {
+    0%, 100% { transform: translate(0, 0); }
+    33% { transform: translate(-60px, 80px); }
+    66% { transform: translate(40px, -40px); }
+  }
+
+  @keyframes drift2 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(80px, -60px); }
+  }
+
+  @keyframes drift3 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-50px, 70px); }
+  }
+
+  /* ── MASTHEAD ─────────────────────────────── */
   .masthead {
-    background: var(--ink);
-    color: var(--paper);
-    padding: 0;
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 100;
-    border-bottom: 3px solid var(--rust);
-  }
-
-  .masthead-inner {
+    padding: 0 3rem;
+    height: 70px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    height: 64px;
+    background: rgba(6,45,27,0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--white-10);
+    transition: background 0.3s;
   }
 
   .logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    color: var(--paper);
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.35rem;
+    color: var(--white);
     text-decoration: none;
     display: flex;
     align-items: center;
     gap: 0.6rem;
   }
 
-  .logo-mark {
-    width: 32px;
-    height: 32px;
-    background: var(--rust);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: white;
-    letter-spacing: 0;
-    flex-shrink: 0;
+  .logo-dot {
+    width: 10px; height: 10px;
+    background: var(--emerald-bright);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--emerald-bright);
+    animation: pulse 3s ease-in-out infinite;
   }
 
-  .logo span {
-    color: var(--stone);
-    font-weight: 400;
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    font-family: 'IBM Plex Mono', monospace;
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 12px var(--emerald-bright); }
+    50% { box-shadow: 0 0 24px var(--emerald-glow), 0 0 48px rgba(16,185,129,0.3); }
+  }
+
+  .logo-cic {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    margin-left: 0.3rem;
+    color: var(--emerald-glow);
+    border: 1px solid rgba(52,211,153,0.3);
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    margin-left: 0.15rem;
   }
 
-  nav {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-  }
+  nav { display: flex; gap: 2rem; align-items: center; }
 
   nav a {
-    color: var(--stone);
+    color: var(--white-60);
     text-decoration: none;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    transition: color 0.2s;
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    transition: color 0.25s;
+    position: relative;
   }
 
-  nav a:hover { color: var(--paper); }
+  nav a:hover { color: var(--white); }
 
-  nav .nav-cta {
-    background: var(--rust);
-    color: white;
-    padding: 0.4rem 1rem;
-    font-size: 0.7rem;
-    transition: background 0.2s;
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--emerald-glow);
+    transition: width 0.3s;
   }
 
-  nav .nav-cta:hover { background: #9a3a22; color: white; }
+  nav a:hover::after { width: 100%; }
+
+  .nav-cta {
+    background: var(--emerald-bright) !important;
+    color: var(--emerald-deep) !important;
+    padding: 0.45rem 1.2rem;
+    border-radius: 4px;
+    font-weight: 600 !important;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.04em;
+    transition: all 0.25s !important;
+  }
+
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(16,185,129,0.4); }
 
   /* ── HERO ─────────────────────────────────── */
   .hero {
-    background: var(--ink);
-    background-image: url("Images/hero background.gif");
-    color: var(--paper);
-    min-height: 92vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: 
-      repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(255,255,255,0.03) 80px),
-      repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(255,255,255,0.03) 80px);
-    pointer-events: none;
-  }
-
-  .hero-text {
-    padding: 6rem 3rem 6rem 5rem;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    position: relative;
-    z-index: 2;
-  }
-
-  .hero-eyebrow {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--rust);
-    margin-bottom: 1.5rem;
-    display: flex;
     align-items: center;
-    gap: 0.75rem;
+    text-align: center;
+    padding: 8rem 2rem 5rem;
+    position: relative;
+    z-index: 1;
   }
 
-  .hero-eyebrow::before {
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--emerald-glow);
+    border: 1px solid rgba(52,211,153,0.25);
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.8s ease both;
+    backdrop-filter: blur(10px);
+    background: rgba(16,185,129,0.06);
+  }
+
+  .hero-badge::before {
     content: '';
-    display: block;
-    width: 40px;
-    height: 1px;
-    background: var(--rust);
+    width: 6px; height: 6px;
+    background: var(--emerald-glow);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--emerald-glow);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.8rem, 5vw, 4.5rem);
-    line-height: 1.05;
-    font-weight: 900;
-    margin-bottom: 1.5rem;
-    letter-spacing: -0.01em;
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(3.2rem, 7vw, 6rem);
+    line-height: 1.0;
+    font-weight: 400;
+    max-width: 900px;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.8s ease 0.15s both;
+    letter-spacing: -0.03em;
   }
 
   .hero h1 em {
     font-style: italic;
-    color: var(--gold);
+    background: linear-gradient(135deg, var(--emerald-glow), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .hero-lead {
-    font-size: 1.1rem;
-    line-height: 1.75;
-    color: var(--stone);
-    max-width: 480px;
-    margin-bottom: 2.5rem;
+    font-size: 1.15rem;
     font-weight: 300;
+    color: var(--white-60);
+    max-width: 580px;
+    margin: 0 auto 3rem;
+    line-height: 1.8;
+    animation: fadeUp 0.8s ease 0.3s both;
   }
 
   .hero-actions {
     display: flex;
     gap: 1rem;
-    flex-wrap: wrap;
+    animation: fadeUp 0.8s ease 0.45s both;
   }
 
-  .btn-primary {
-    background: var(--rust);
-    color: white;
-    padding: 0.85rem 2rem;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.78rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+  .btn-glow {
+    background: var(--emerald-bright);
+    color: var(--emerald-deep);
+    padding: 0.9rem 2.2rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
     text-decoration: none;
-    transition: background 0.2s, transform 0.15s;
+    border-radius: 6px;
+    transition: all 0.25s;
     display: inline-block;
+    border: none;
+    cursor: pointer;
   }
 
-  .btn-primary:hover { background: #9a3a22; transform: translateY(-1px); }
+  .btn-glow:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(16,185,129,0.35);
+  }
 
-  .btn-secondary {
+  .btn-ghost {
     background: transparent;
-    color: var(--paper);
-    padding: 0.85rem 2rem;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.78rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    color: var(--white);
+    padding: 0.9rem 2.2rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 400;
     text-decoration: none;
-    border: 1px solid rgba(255,255,255,0.25);
-    transition: border-color 0.2s, transform 0.15s;
+    border-radius: 6px;
+    border: 1px solid var(--white-20);
+    transition: all 0.25s;
     display: inline-block;
   }
 
-  .btn-secondary:hover { border-color: var(--paper); transform: translateY(-1px); }
+  .btn-ghost:hover {
+    border-color: var(--white-60);
+    transform: translateY(-2px);
+    background: var(--white-10);
+  }
 
-  .hero-visual {
-    position: relative;
+  /* Stats row below hero */
+  .hero-stats {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4rem 3rem;
+    gap: 3rem;
+    margin-top: 5rem;
+    animation: fadeUp 0.8s ease 0.6s both;
   }
 
-  .hero-stat-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    width: 100%;
-    max-width: 360px;
-  }
-
-  .stat-card {
-    border: 1px solid rgba(255,255,255,0.1);
-    padding: 1.5rem;
-    background: rgba(255,255,255,0.03);
+  .hero-stat {
+    text-align: center;
     position: relative;
-    animation: fadeSlide 0.6s ease both;
   }
 
-  .stat-card:nth-child(1) { animation-delay: 0.3s; }
-  .stat-card:nth-child(2) { animation-delay: 0.5s; margin-left: 2rem; }
-  .stat-card:nth-child(3) { animation-delay: 0.7s; }
-
-  @keyframes fadeSlide {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .stat-card::before {
+  .hero-stat:not(:last-child)::after {
     content: '';
     position: absolute;
-    top: 0; left: 0;
-    width: 3px; height: 100%;
-    background: var(--rust);
+    right: -1.5rem;
+    top: 15%;
+    height: 70%;
+    width: 1px;
+    background: var(--white-10);
   }
 
-  .stat-number {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: var(--paper);
-    line-height: 1;
-    margin-bottom: 0.4rem;
+  .hero-stat-value {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2.2rem;
+    color: var(--emerald-glow);
+    line-height: 1.1;
+    margin-bottom: 0.3rem;
   }
 
-  .stat-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
+  .hero-stat-label {
+    font-size: 0.72rem;
+    color: var(--white-40);
+    font-weight: 300;
+    letter-spacing: 0.03em;
+  }
+
+  /* ── MARQUEE STRIP ────────────────────────── */
+  .marquee-strip {
+    border-top: 1px solid var(--white-10);
+    border-bottom: 1px solid var(--white-10);
+    padding: 1rem 0;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    background: rgba(10,74,46,0.4);
+    backdrop-filter: blur(10px);
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 4rem;
+    animation: scroll 30s linear infinite;
+    width: max-content;
+  }
+
+  .marquee-item {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--white-40);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+  }
+
+  .marquee-item span {
+    color: var(--emerald-glow);
+    font-style: normal;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--stone);
   }
 
-  /* ── MISSION STRIP ─────────────────────────── */
-  .mission-strip {
-    background: var(--rust);
-    color: white;
-    padding: 1.5rem 5rem;
-    font-family: 'Playfair Display', serif;
-    font-size: 1.15rem;
-    font-style: italic;
-    text-align: center;
-    letter-spacing: 0.01em;
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
   }
 
-  /* ── SECTION BASE ─────────────────────────── */
-  section {
-    max-width: 1280px;
+  /* ── SECTIONS ─────────────────────────────── */
+  .section {
+    position: relative;
+    z-index: 1;
+    padding: 8rem 3rem;
+    max-width: 1260px;
     margin: 0 auto;
-    padding: 6rem 3rem;
   }
 
-  .section-header {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 2rem;
-    align-items: start;
-    margin-bottom: 4rem;
+  .section-full {
+    position: relative;
+    z-index: 1;
+    padding: 8rem 0;
   }
 
-  .section-num {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--rust);
-    padding-top: 0.4rem;
-    white-space: nowrap;
-  }
-
-  .section-heading {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 3.5vw, 3rem);
-    font-weight: 700;
-    line-height: 1.15;
-    letter-spacing: -0.01em;
-  }
-
-  .section-heading em {
-    font-style: italic;
-    color: var(--rust);
-  }
-
-  /* ── ABOUT ─────────────────────────────────── */
-  #about {
-    background: var(--pale);
-    max-width: 100%;
-    padding: 6rem 0;
-  }
-
-  #about .inner {
-    max-width: 1280px;
+  .section-inner {
+    max-width: 1260px;
     margin: 0 auto;
     padding: 0 3rem;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--emerald-glow);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--emerald-glow);
+  }
+
+  .section-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--emerald-glow);
+  }
+
+  .section-subtitle {
+    font-size: 1.05rem;
+    color: var(--white-60);
+    max-width: 560px;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .section-header { margin-bottom: 4rem; }
+
+  /* ── ABOUT ─────────────────────────────────── */
+  .about-section {
+    background: linear-gradient(180deg, rgba(10,74,46,0.3) 0%, transparent 100%);
+    border-top: 1px solid var(--white-10);
   }
 
   .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 5rem;
+    gap: 6rem;
     align-items: start;
   }
 
   .about-copy p {
     margin-bottom: 1.25rem;
-    font-size: 1.05rem;
-    color: #2a2a2a;
+    font-size: 1.02rem;
+    color: var(--white-60);
+    line-height: 1.8;
+    font-weight: 300;
   }
 
   .about-copy p:first-child {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
+    color: var(--white-80);
     font-weight: 300;
-    line-height: 1.6;
-    color: var(--ink);
   }
 
-  .about-pillars {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
+  .pillars { display: flex; flex-direction: column; }
 
   .pillar {
-    border-top: 1px solid var(--stone);
+    border-top: 1px solid var(--white-10);
     padding: 1.5rem 0;
     display: grid;
-    grid-template-columns: 2.5rem 1fr;
-    gap: 1rem;
+    grid-template-columns: 3rem 1fr;
+    gap: 0.75rem;
+    transition: all 0.3s;
   }
 
-  .pillar:last-child { border-bottom: 1px solid var(--stone); }
+  .pillar:last-child { border-bottom: 1px solid var(--white-10); }
 
-  .pillar-icon {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--rust);
-    font-weight: 500;
-    padding-top: 0.2rem;
+  .pillar:hover { padding-left: 0.5rem; }
+
+  .pillar-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--emerald-glow);
+    padding-top: 0.15rem;
   }
 
   .pillar h4 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Instrument Serif', serif;
     font-size: 1.05rem;
-    font-weight: 700;
-    margin-bottom: 0.4rem;
+    font-weight: 400;
+    margin-bottom: 0.3rem;
+    color: var(--white-90);
   }
 
   .pillar p {
-    font-size: 0.9rem;
-    color: #4a4a4a;
+    font-size: 0.85rem;
+    color: var(--white-40);
     line-height: 1.6;
+    font-weight: 300;
   }
 
-  /* ── PLATFORM ──────────────────────────────── */
-  #platform {
-    padding: 6rem 3rem;
-  }
-
-  .features-grid {
+  /* ── PROGRAMMES GRID ───────────────────────── */
+  .programmes-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    border: 1px solid var(--stone);
+    gap: 1px;
+    background: var(--white-10);
+    border: 1px solid var(--white-10);
+    border-radius: 12px;
+    overflow: hidden;
   }
 
-  .feature {
+  .programme {
+    background: rgba(6,45,27,0.6);
+    backdrop-filter: blur(10px);
     padding: 2.5rem;
-    border-right: 1px solid var(--stone);
+    transition: all 0.35s;
     position: relative;
   }
 
-  .feature:last-child { border-right: none; }
-  .feature:nth-child(4), .feature:nth-child(5), .feature:nth-child(6) {
-    border-top: 1px solid var(--stone);
+  .programme::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: transparent;
+    transition: background 0.35s;
   }
 
-  .feature-tag {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
+  .programme:hover {
+    background: rgba(10,74,46,0.8);
+  }
+
+  .programme:hover::before {
+    background: var(--emerald-glow);
+  }
+
+  .programme-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--rust);
     margin-bottom: 1rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 3px;
+    display: inline-block;
   }
 
-  .feature h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
+  .programme-tag.green { background: rgba(16,185,129,0.15); color: var(--emerald-glow); }
+  .programme-tag.gold { background: rgba(251,191,36,0.15); color: var(--gold); }
+  .programme-tag.mint { background: rgba(167,243,208,0.1); color: var(--mint); }
+
+  .programme h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    margin-bottom: 0.7rem;
+    color: var(--white);
     line-height: 1.3;
   }
 
-  .feature p {
-    font-size: 0.9rem;
-    color: #4a4a4a;
+  .programme p {
+    font-size: 0.85rem;
+    color: var(--white-40);
     line-height: 1.65;
+    font-weight: 300;
   }
 
   /* ── CARNEGIE PROJECT ─────────────────────── */
-  #carnegie {
-    background: var(--ink);
-    color: var(--paper);
-    max-width: 100%;
-    padding: 7rem 0;
+  .carnegie-section {
+    background: linear-gradient(180deg, var(--emerald-deep), #041a10, var(--emerald-deep));
+    position: relative;
+    overflow: hidden;
   }
 
-  #carnegie .inner {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 3rem;
+  .carnegie-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 80% 20%, rgba(251,191,36,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 20% 80%, rgba(16,185,129,0.08) 0%, transparent 60%);
+    pointer-events: none;
   }
 
-  #carnegie .section-heading {
-    color: var(--paper);
-  }
-
-  #carnegie .section-heading em {
-    color: var(--gold);
-  }
-
-  #carnegie .section-num { color: var(--gold); }
-
-  .carnegie-layout {
+  .carnegie-grid {
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 6rem;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 5rem;
     align-items: start;
   }
 
   .carnegie-copy p {
-    color: var(--stone);
-    font-size: 1.05rem;
+    color: var(--white-60);
+    font-size: 1.02rem;
     margin-bottom: 1.25rem;
-    line-height: 1.75;
+    line-height: 1.8;
+    font-weight: 300;
   }
 
-  .carnegie-copy p strong {
-    color: var(--paper);
-    font-weight: 600;
-  }
+  .carnegie-copy strong { color: var(--white); font-weight: 500; }
 
   .carnegie-quote {
-    border-left: 3px solid var(--gold);
-    padding-left: 1.5rem;
-    margin: 2rem 0;
+    border-left: 2px solid var(--gold);
+    padding-left: 1.75rem;
+    margin: 2.5rem 0;
   }
 
   .carnegie-quote blockquote {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Instrument Serif', serif;
     font-size: 1.3rem;
     font-style: italic;
-    color: var(--paper);
+    color: var(--white-90);
     line-height: 1.5;
   }
 
   .carnegie-quote cite {
     display: block;
     margin-top: 0.75rem;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--gold);
     font-style: normal;
   }
 
-  .carnegie-details {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .detail-row {
+  .detail-cards {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 0.75rem;
   }
 
-  .detail-box {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    padding: 1.5rem;
+  .detail-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--white-10);
+    border-radius: 8px;
+    padding: 1.25rem;
+    transition: border-color 0.3s;
   }
 
-  .detail-box-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
+  .detail-card:hover { border-color: var(--gold); }
+
+  .dc-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--gold);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
   }
 
-  .detail-box-value {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.05rem;
-    color: var(--paper);
-    line-height: 1.4;
-  }
-
-  .carnegie-programme-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .carnegie-programme-list li {
-    padding: 1rem 0;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    display: grid;
-    grid-template-columns: 1.5rem 1fr;
-    gap: 1rem;
-    color: var(--stone);
+  .dc-value {
+    font-family: 'Instrument Serif', serif;
     font-size: 0.95rem;
+    color: var(--white);
+    line-height: 1.35;
   }
 
-  .carnegie-programme-list li:last-child { border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .carnegie-features {
+    list-style: none;
+    margin-top: 1rem;
+  }
 
-  .carnegie-programme-list li::before {
+  .carnegie-features li {
+    padding: 0.8rem 0;
+    border-top: 1px solid var(--white-10);
+    display: flex;
+    gap: 0.75rem;
+    color: var(--white-60);
+    font-size: 0.88rem;
+    font-weight: 300;
+    line-height: 1.5;
+    transition: color 0.2s;
+  }
+
+  .carnegie-features li:hover { color: var(--white-80); }
+  .carnegie-features li:last-child { border-bottom: 1px solid var(--white-10); }
+
+  .carnegie-features li::before {
     content: '→';
-    color: var(--rust);
-    font-family: 'IBM Plex Mono', monospace;
+    color: var(--gold);
+    font-family: 'Space Mono', monospace;
+    flex-shrink: 0;
   }
 
-  /* ── FOR WHOM ─────────────────────────────── */
-  #audiences {
-    background: var(--cream);
-    max-width: 100%;
-    padding: 6rem 0;
+  /* ── LIBRARY HUBS ─────────────────────────── */
+  .library-section {
+    background: linear-gradient(180deg, transparent, rgba(10,74,46,0.3), transparent);
+    border-top: 1px solid var(--white-10);
+    border-bottom: 1px solid var(--white-10);
   }
 
-  #audiences .inner {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 3rem;
+  .library-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
   }
 
-  .audience-cards {
+  .library-copy p {
+    font-size: 1.02rem;
+    color: var(--white-60);
+    margin-bottom: 1.25rem;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .pod-types { display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .pod-type {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--white-10);
+    border-radius: 8px;
+    padding: 1.1rem 1.3rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .pod-type:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: var(--emerald-bright);
+    transform: translateX(4px);
+  }
+
+  .pod-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--emerald-glow);
+    background: rgba(16,185,129,0.1);
+    padding: 0.3rem 0.5rem;
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .pod-type h4 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--white-90);
+    margin-bottom: 0.2rem;
+  }
+
+  .pod-type p {
+    font-size: 0.8rem;
+    color: var(--white-40);
+    line-height: 1.5;
+    margin: 0;
+    font-weight: 300;
+  }
+
+  /* ── AUDIENCES ─────────────────────────────── */
+  .audience-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    background: var(--stone);
+    gap: 1.25rem;
   }
 
   .audience-card {
-    background: var(--paper);
-    padding: 2.5rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--white-10);
+    border-radius: 10px;
+    padding: 2.25rem;
+    transition: all 0.3s;
+  }
+
+  .audience-card:hover {
+    border-color: var(--emerald-bright);
+    background: rgba(16,185,129,0.04);
+    transform: translateY(-4px);
   }
 
   .audience-card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 1.25rem;
     padding-bottom: 1rem;
-    border-bottom: 2px solid var(--rust);
+    border-bottom: 1px solid var(--emerald-bright);
+    color: var(--white);
   }
 
-  .audience-card ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-  }
+  .audience-card ul { list-style: none; }
 
-  .audience-card ul li {
-    font-size: 0.9rem;
-    color: #3a3a3a;
-    padding-left: 1.2rem;
+  .audience-card li {
+    font-size: 0.85rem;
+    color: var(--white-40);
+    padding: 0.35rem 0 0.35rem 1.2rem;
     position: relative;
+    font-weight: 300;
+    line-height: 1.55;
   }
 
-  .audience-card ul li::before {
+  .audience-card li::before {
     content: '—';
     position: absolute;
     left: 0;
-    color: var(--rust);
-    font-family: 'IBM Plex Mono', monospace;
+    color: var(--emerald-glow);
   }
 
   /* ── CONTACT ──────────────────────────────── */
-  #contact {
-    background: var(--pale);
-    max-width: 100%;
-    padding: 6rem 0;
+  .contact-section {
+    border-top: 1px solid var(--white-10);
+    background: linear-gradient(180deg, transparent, rgba(10,74,46,0.2));
   }
 
-  #contact .inner {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 3rem;
+  .contact-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 6rem;
+    gap: 5rem;
     align-items: start;
   }
 
   .contact-lead {
-    font-size: 1.05rem;
-    color: #3a3a3a;
+    font-size: 1.02rem;
+    color: var(--white-60);
     margin-bottom: 2rem;
+    line-height: 1.8;
+    font-weight: 300;
   }
 
-  .contact-methods {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 2rem;
-  }
+  .contact-methods { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
 
   .contact-method {
     display: flex;
@@ -672,148 +858,134 @@
     font-size: 0.9rem;
   }
 
-  .contact-method-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.65rem;
+  .cm-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--rust);
-    min-width: 5rem;
+    color: var(--emerald-glow);
+    min-width: 4.5rem;
   }
 
   .contact-method a {
-    color: var(--ink);
+    color: var(--white-80);
     text-decoration: none;
-    border-bottom: 1px solid var(--stone);
-    transition: border-color 0.2s;
+    border-bottom: 1px solid var(--white-10);
+    transition: all 0.2s;
   }
 
-  .contact-method a:hover { border-color: var(--rust); }
+  .contact-method a:hover { color: var(--white); border-color: var(--emerald-glow); }
 
-  .contact-form-area {
-    background: white;
+  .contact-form {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--white-10);
     padding: 2.5rem;
-    border: 1px solid var(--stone);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
   }
 
-  .contact-form-area h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    font-weight: 700;
+  .contact-form h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
     margin-bottom: 1.5rem;
   }
 
-  .form-group {
-    margin-bottom: 1.25rem;
-  }
+  .form-group { margin-bottom: 1rem; }
 
   .form-group label {
     display: block;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.12em;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #5a5a5a;
-    margin-bottom: 0.5rem;
+    color: var(--white-40);
+    margin-bottom: 0.4rem;
   }
 
   .form-group input,
   .form-group select,
   .form-group textarea {
     width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid var(--stone);
-    background: var(--pale);
-    font-family: 'Source Serif 4', serif;
-    font-size: 0.95rem;
-    color: var(--ink);
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--white-10);
+    background: rgba(255,255,255,0.04);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.88rem;
+    color: var(--white);
     outline: none;
-    transition: border-color 0.2s;
+    transition: border-color 0.25s;
+    border-radius: 6px;
     -webkit-appearance: none;
-    border-radius: 0;
   }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: var(--white-20); }
 
   .form-group input:focus,
   .form-group select:focus,
-  .form-group textarea:focus {
-    border-color: var(--rust);
-  }
+  .form-group textarea:focus { border-color: var(--emerald-bright); }
 
-  .form-group textarea { height: 120px; resize: vertical; }
+  .form-group select { color: var(--white-60); }
+  .form-group select option { background: var(--emerald-deep); color: var(--white); }
+  .form-group textarea { height: 100px; resize: vertical; }
 
   .form-submit {
     width: 100%;
-    background: var(--ink);
-    color: var(--paper);
+    background: var(--emerald-bright);
+    color: var(--emerald-deep);
     border: none;
-    padding: 0.9rem;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    padding: 0.85rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s;
+    border-radius: 6px;
+    transition: all 0.25s;
+    margin-top: 0.25rem;
   }
 
-  .form-submit:hover { background: var(--rust); }
+  .form-submit:hover {
+    box-shadow: 0 4px 24px rgba(16,185,129,0.35);
+    transform: translateY(-1px);
+  }
 
   /* ── FOOTER ───────────────────────────────── */
   footer {
-    background: var(--ink);
-    color: var(--stone);
-    padding: 3rem 5rem;
+    border-top: 1px solid var(--white-10);
+    padding: 2.5rem 3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 3px solid var(--rust);
+    position: relative;
+    z-index: 1;
+    font-size: 0.78rem;
+    color: var(--white-40);
   }
 
-  .footer-left {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
-  }
-
-  .footer-left strong {
-    display: block;
-    color: var(--paper);
-    font-size: 0.85rem;
+  .footer-brand {
+    font-family: 'Instrument Serif', serif;
+    color: var(--white-80);
+    font-size: 0.95rem;
     margin-bottom: 0.3rem;
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
   }
 
-  .footer-links {
-    display: flex;
-    gap: 2rem;
-  }
+  .footer-links { display: flex; gap: 2rem; }
 
   .footer-links a {
-    color: var(--stone);
+    color: var(--white-40);
     text-decoration: none;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    font-size: 0.75rem;
     transition: color 0.2s;
   }
 
-  .footer-links a:hover { color: var(--paper); }
-
-  /* ── DIVIDER ──────────────────────────────── */
-  .ruled-divider {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 3rem;
-    border: none;
-    border-top: 1px solid var(--stone);
-  }
+  .footer-links a:hover { color: var(--emerald-glow); }
 
   /* ── ANIMATIONS ───────────────────────────── */
   .reveal {
     opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
+    transform: translateY(28px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .reveal.visible {
@@ -821,114 +993,149 @@
     transform: none;
   }
 
+  .reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal-stagger.visible > *:nth-child(1) { transition-delay: 0s; opacity: 1; transform: none; }
+  .reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.08s; opacity: 1; transform: none; }
+  .reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.16s; opacity: 1; transform: none; }
+  .reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.24s; opacity: 1; transform: none; }
+  .reveal-stagger.visible > *:nth-child(5) { transition-delay: 0.32s; opacity: 1; transform: none; }
+  .reveal-stagger.visible > *:nth-child(6) { transition-delay: 0.4s; opacity: 1; transform: none; }
+
+  /* Horizontal line animation */
+  .line-reveal {
+    height: 1px;
+    background: var(--emerald-glow);
+    width: 0;
+    transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    margin: 5rem auto;
+    max-width: 200px;
+  }
+
+  .line-reveal.visible { width: 200px; }
+
   /* ── RESPONSIVE ───────────────────────────── */
-  @media (max-width: 900px) {
-    .hero { grid-template-columns: 1fr; min-height: auto; }
-    .hero-visual { display: none; }
-    .hero-text { padding: 4rem 2rem; }
-    .about-grid, .carnegie-layout, #contact .inner { grid-template-columns: 1fr; gap: 3rem; }
-    .features-grid, .audience-cards { grid-template-columns: 1fr; }
-    .feature { border-right: none; border-bottom: 1px solid var(--stone); }
-    footer { flex-direction: column; gap: 2rem; text-align: center; padding: 2rem; }
+  @media (max-width: 960px) {
+    .about-grid, .carnegie-grid, .library-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .programmes-grid, .audience-grid { grid-template-columns: 1fr; }
+    .section { padding: 5rem 1.5rem; }
+    .section-full { padding: 5rem 0; }
+    .section-inner { padding: 0 1.5rem; }
+    .hero { padding: 7rem 1.5rem 4rem; min-height: auto; }
+    .hero h1 { font-size: clamp(2.4rem, 8vw, 3.5rem); }
+    .hero-stats { flex-direction: column; gap: 1.5rem; }
+    .hero-stat::after { display: none; }
+    .detail-cards { grid-template-columns: 1fr; }
     nav { display: none; }
-    section { padding: 4rem 1.5rem; }
-    .mission-strip { padding: 1.5rem 2rem; }
+    .masthead { padding: 0 1.5rem; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 1.5rem; }
+    .glow-1, .glow-2, .glow-3 { opacity: 0.15; }
   }
 </style>
 </head>
 <body>
 
+<!-- Ambient glows -->
+<div class="glow glow-1"></div>
+<div class="glow glow-2"></div>
+<div class="glow glow-3"></div>
+
 <!-- MASTHEAD -->
 <header class="masthead">
-  <div class="masthead-inner">
-    <a href="#" class="logo">
-      <div class="logo-mark"><img src="Images/ai britain logo no text.png"></div>
-      AI Britain
-      <span>CIC</span>
-    </a>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#platform">Platform</a>
-      <a href="#carnegie">Carnegie Project</a>
-      <a href="#audiences">Who We Serve</a>
-      <a href="#contact" class="nav-cta">Get in Touch</a>
-    </nav>
-  </div>
+  <a href="#" class="logo">
+    <div class="logo-dot"></div>
+    AI Britain
+    <span class="logo-cic">CIC</span>
+  </a>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#programmes">Programmes</a>
+    <a href="#carnegie">Carnegie</a>
+    <a href="#libraries">Library Hubs</a>
+    <a href="#contact" class="nav-cta">Get in Touch</a>
+  </nav>
 </header>
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-text">
-    <div class="hero-eyebrow">Community Interest Company · Registered in England & Wales</div>
-    <h1>Technology<br>for the<br>Common Good.</h1>
-    <p class="hero-lead">AI Britain CIC puts artificial intelligence in the hands of people who need it most — free tools, free training, and free access to the digital economy for unemployed and low-income communities across Britain.</p>
-    <div class="hero-actions">
-      <a href="#about" class="btn-primary">Our Mission</a>
-      <a href="#carnegie" class="btn-secondary">Carnegie Project</a>
-    </div>
+  <div class="hero-badge">Community Interest Company · England & Wales</div>
+  <h1>Technology for the <em>common good.</em></h1>
+  <p class="hero-lead">AI Britain puts artificial intelligence in the hands of people who need it most. Free tools, free training, and free access to the digital economy — for unemployed and low-income communities across Britain.</p>
+  <div class="hero-actions">
+    <a href="#about" class="btn-glow">Our mission</a>
+    <a href="#carnegie" class="btn-ghost">The Carnegie Project</a>
   </div>
-  <div class="hero-visual">
-    <div class="hero-stat-stack">
-      <div class="stat-card">
-        <div class="stat-number">Free</div>
-        <div class="stat-label">All services for unemployed & low-income users</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">AI</div>
-        <div class="stat-label">Tools for career development, innovation & research</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">CIC</div>
-        <div class="stat-label">Community Interest Company — profit locked for social purpose</div>
-      </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-value">Free</div>
+      <div class="hero-stat-label">All services at point of use</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-value">CIC</div>
+      <div class="hero-stat-label">Surplus locked to social purpose</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-value">Youth</div>
+      <div class="hero-stat-label">Focus on under-25s and unemployed</div>
     </div>
   </div>
 </div>
 
-<!-- MISSION STRIP -->
-<div class="mission-strip">
-  "The man who dies rich, dies disgraced." — Andrew Carnegie, 1889
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <div class="marquee-item">"The man who dies rich, dies disgraced." <span>Andrew Carnegie, 1889</span></div>
+    <div class="marquee-item">"The man who dies rich, dies disgraced." <span>Andrew Carnegie, 1889</span></div>
+    <div class="marquee-item">"The man who dies rich, dies disgraced." <span>Andrew Carnegie, 1889</span></div>
+    <div class="marquee-item">"The man who dies rich, dies disgraced." <span>Andrew Carnegie, 1889</span></div>
+    <div class="marquee-item">"The man who dies rich, dies disgraced." <span>Andrew Carnegie, 1889</span></div>
+    <div class="marquee-item">"The man who dies rich, dies disgraced." <span>Andrew Carnegie, 1889</span></div>
+  </div>
 </div>
 
 <!-- ABOUT -->
-<div id="about">
-  <div class="inner">
+<div id="about" class="section-full about-section">
+  <div class="section-inner">
     <div class="section-header reveal">
-      <div class="section-num">01 / About</div>
-      <h2 class="section-heading">We exist to close<br>the <em>AI divide.</em></h2>
+      <div class="section-label">01 / About</div>
+      <div class="section-title">We exist to close<br>the <em>AI divide.</em></div>
     </div>
     <div class="about-grid">
       <div class="about-copy reveal">
         <p>AI Britain CIC was founded on a straightforward conviction: the benefits of artificial intelligence must not be reserved for those who can afford them.</p>
-        <p>We provide free, practical AI education and tools to people who are unemployed, in low-income households, or living in digitally underserved communities. Our focus is on young people — the generation that will either benefit from or be displaced by AI, depending largely on the opportunities available to them now.</p>
-        <p>As a Community Interest Company, every penny of surplus is locked to our social purpose. We do not exist to extract value from communities. We exist to build it there.</p>
+        <p>We provide free AI education and tools to people who are unemployed, in low-income households, or living in digitally underserved communities. Our focus is on young people — the generation whose prospects will be shaped by whether they have access to these technologies now or not.</p>
+        <p>As a Community Interest Company, our articles of association lock every penny of surplus to our social purpose. We do not exist to extract value from communities. We exist to build it there.</p>
       </div>
-      <div class="about-pillars reveal">
+      <div class="pillars reveal-stagger">
         <div class="pillar">
-          <div class="pillar-icon">01</div>
+          <div class="pillar-num">01</div>
           <div>
-            <h4>Free AI Tools & Training</h4>
+            <h4>Free AI tools and training</h4>
             <p>Hands-on access to AI platforms for career development, content creation, and research — at no cost to participants.</p>
           </div>
         </div>
         <div class="pillar">
-          <div class="pillar-icon">02</div>
+          <div class="pillar-num">02</div>
           <div>
-            <h4>Youth-Led Innovation</h4>
+            <h4>Youth-led innovation</h4>
             <p>Dedicated programmes for young people to build skills, launch ideas, and enter the digital economy on their own terms.</p>
           </div>
         </div>
         <div class="pillar">
-          <div class="pillar-icon">03</div>
+          <div class="pillar-num">03</div>
           <div>
-            <h4>Data for Development</h4>
-            <p>AI-powered mapping and impact analysis to help donors, agencies, and communities direct resources where they matter most.</p>
+            <h4>Data for development</h4>
+            <p>AI-powered mapping and analysis to help donors, agencies, and communities direct resources where they matter most.</p>
           </div>
         </div>
         <div class="pillar">
-          <div class="pillar-icon">04</div>
+          <div class="pillar-num">04</div>
           <div>
-            <h4>Community Infrastructure</h4>
+            <h4>Community infrastructure</h4>
             <p>Physical spaces — from library pods to innovation centres — designed to make digital participation genuinely accessible.</p>
           </div>
         </div>
@@ -937,89 +1144,87 @@
   </div>
 </div>
 
-<hr class="ruled-divider">
+<div class="line-reveal"></div>
 
-<!-- PLATFORM -->
-<section id="platform">
+<!-- PROGRAMMES -->
+<div id="programmes" class="section">
   <div class="section-header reveal">
-    <div class="section-num">02 / Platform</div>
-    <h2 class="section-heading">What we<br><em>build and offer.</em></h2>
+    <div class="section-label">02 / Programmes</div>
+    <div class="section-title">What we <em>build and deliver.</em></div>
+    <div class="section-subtitle">Six programmes across digital tools, physical spaces, and development infrastructure.</div>
   </div>
-  <div class="features-grid reveal">
-    <div class="feature">
-      <div class="feature-tag">Global Development</div>
-      <h3>Interactive Impact Map</h3>
-      <p>Visualise thousands of development projects from NGOs and aid agencies across least-developed countries, layered with geospatial, climate, and socio-economic data down to community level.</p>
+  <div class="programmes-grid reveal-stagger">
+    <div class="programme">
+      <div class="programme-tag green">AI tools</div>
+      <h3>Free AI for individuals</h3>
+      <p>Practical AI tools for CV writing, interview preparation, skills development, and content creation — available at no charge to unemployed and low-income users.</p>
     </div>
-    <div class="feature">
-      <div class="feature-tag">AI Analysis</div>
-      <h3>Contextual Insights Engine</h3>
-      <p>Our AI analyses environmental conditions, socio-economic indicators, and project outcomes to surface patterns and correlations that inform better decision-making by donors and implementers.</p>
+    <div class="programme">
+      <div class="programme-tag mint">Physical spaces</div>
+      <h3>Library technology pods</h3>
+      <p>Purpose-built technology spaces in public libraries — branded "1984" — bringing AI access to communities at no capital cost to local councils.</p>
     </div>
-    <div class="feature">
-      <div class="feature-tag">Transparency</div>
-      <h3>Project Tracking & Reporting</h3>
-      <p>Access goals, activities, and reported outcomes from partner organisations. Customisable dashboards for donors to track portfolio footprint and agencies to monitor programmes in real time.</p>
+    <div class="programme">
+      <div class="programme-tag gold">Flagship</div>
+      <h3>The Carnegie Centre</h3>
+      <p>Scotland's first community AI innovation centre for young people. A Category B listed 1892 church in Aberdeen, next door to the Carnegie library.</p>
     </div>
-    <div class="feature">
-      <div class="feature-tag">Community Access</div>
-      <h3>Free AI Tools for Individuals</h3>
-      <p>Practical AI tools for CV writing, interview preparation, skills development, and content creation — available at no charge to unemployed and low-income users across the UK.</p>
+    <div class="programme">
+      <div class="programme-tag green">Development</div>
+      <h3>Interactive impact map</h3>
+      <p>Visualise development projects from NGOs and aid agencies across least-developed countries, layered with geospatial, climate, and socio-economic data.</p>
     </div>
-    <div class="feature">
-      <div class="feature-tag">Digital Hubs</div>
-      <h3>Library Technology Pods</h3>
-      <p>Purpose-built technology spaces in public libraries — branded 1984 — bringing AI access to communities at no capital cost to local councils. Pilot: Westminster.</p>
+    <div class="programme">
+      <div class="programme-tag mint">Analysis</div>
+      <h3>Contextual insights engine</h3>
+      <p>AI analysis of environmental conditions and project outcomes to surface patterns that inform better decision-making by donors and implementers.</p>
     </div>
-    <div class="feature">
-      <div class="feature-tag">Innovation Centres</div>
-      <h3>Physical AI Spaces</h3>
-      <p>Flagship community innovation centres providing studio space, AI workstations, and mentorship for young people in content creation, entrepreneurship, and digital research.</p>
+    <div class="programme">
+      <div class="programme-tag gold">Transparency</div>
+      <h3>Project tracking</h3>
+      <p>Access goals, activities, and outcomes from partner organisations. Customisable dashboards for donors and agencies to monitor programmes.</p>
     </div>
   </div>
-</section>
+</div>
 
-<!-- CARNEGIE PROJECT -->
-<div id="carnegie">
-  <div class="inner">
+<!-- CARNEGIE -->
+<div id="carnegie" class="section-full carnegie-section">
+  <div class="section-inner">
     <div class="section-header reveal">
-      <div class="section-num">03 / Carnegie Project</div>
-      <h2 class="section-heading"><em>Carnegie:</em> Moral Philosophy<br>& Values in the Digital Age</h2>
+      <div class="section-label" style="color: var(--gold);">03 / The Carnegie Project</div>
+      <div class="section-title" style="color: var(--gold);">Carnegie: <em style="color: var(--white);">moral philosophy<br>and values in the digital age</em></div>
     </div>
-    <div class="carnegie-layout">
+    <div class="carnegie-grid">
       <div class="carnegie-copy reveal">
-        <p>In 1892, Scottish-American industrialist Andrew Carnegie built a public library on Rosemount Viaduct, Aberdeen — free to all, regardless of class or income. His conviction was that access to knowledge was the foundation of human advancement.</p>
+        <p>In 1892, Andrew Carnegie built a public library on Rosemount Viaduct, Aberdeen — free to all, regardless of class or income. His conviction was that access to knowledge was the foundation of human advancement.</p>
         <p>Next door stands St Mark's Church — Carnegie's architectural neighbour — now vacant for five years and listed for sale by the Church of Scotland. <strong>AI Britain CIC proposes to acquire and convert this building into Scotland's first dedicated community AI innovation centre for young people,</strong> named in honour of Carnegie's philosophy.</p>
         <div class="carnegie-quote">
           <blockquote>"The library next door gave free access to books in 1892. The Carnegie Centre will give free access to artificial intelligence in the same spirit, in the same street, 133 years later."</blockquote>
-          <cite>AI Britain CIC, Proposal to the General Trustees, 2025</cite>
+          <cite>AI Britain CIC — Proposal to the General Trustees, 2025</cite>
         </div>
-        <p>The centre will serve young Scots from low-income and unemployed backgrounds — providing AI workstations, a dedicated content creation studio, entrepreneurship programmes, and research facilities. All services will be free at the point of use.</p>
-        <p>We are seeking a partnership with the Church of Scotland that reflects the shared values embedded in this building's history: community service, access to knowledge, and investment in the next generation.</p>
-        <a href="#contact" class="btn-primary" style="margin-top:1rem; display:inline-block;">Express Interest in Partnering</a>
+        <p>The centre will serve young Scots from low-income and unemployed backgrounds — providing AI workstations, a content creation studio, entrepreneurship programmes, and research facilities. All services free at the point of use.</p>
+        <a href="#contact" class="btn-glow" style="margin-top:0.75rem;">Express interest in partnering</a>
       </div>
-      <div class="carnegie-details reveal">
-        <div class="detail-row">
-          <div class="detail-box">
-            <div class="detail-box-label">Building</div>
-            <div class="detail-box-value">St Mark's Church, Rosemount Viaduct, Aberdeen</div>
+      <div class="reveal">
+        <div class="detail-cards">
+          <div class="detail-card">
+            <div class="dc-label">Building</div>
+            <div class="dc-value">St Mark's Church, Rosemount Viaduct, Aberdeen</div>
           </div>
-          <div class="detail-box">
-            <div class="detail-box-label">Built</div>
-            <div class="detail-box-value">1892 — Category B Listed</div>
+          <div class="detail-card">
+            <div class="dc-label">Built</div>
+            <div class="dc-value">1892 — Category B listed</div>
           </div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-box">
-            <div class="detail-box-label">Asking Price</div>
-            <div class="detail-box-value">Offers over £320,000</div>
+          <div class="detail-card">
+            <div class="dc-label">Asking price</div>
+            <div class="dc-value">Offers over £320,000</div>
           </div>
-          <div class="detail-box">
-            <div class="detail-box-label">Vacant Since</div>
-            <div class="detail-box-value">Approximately 5 years</div>
+          <div class="detail-card">
+            <div class="dc-label">Vacant since</div>
+            <div class="dc-value">Approximately 5 years</div>
           </div>
         </div>
-        <ul class="carnegie-programme-list">
+        <ul class="carnegie-features">
           <li>Free AI tools and training for unemployed young people</li>
           <li>Dedicated content creation studio with professional equipment</li>
           <li>Social media and digital entrepreneurship mentorship</li>
@@ -1032,136 +1237,213 @@
   </div>
 </div>
 
-<!-- AUDIENCES -->
-<div id="audiences">
-  <div class="inner">
+<!-- LIBRARY HUBS -->
+<div id="libraries" class="section-full library-section">
+  <div class="section-inner">
     <div class="section-header reveal">
-      <div class="section-num">04 / Who We Serve</div>
-      <h2 class="section-heading">Built for people,<br><em>not profit.</em></h2>
+      <div class="section-label">04 / Library Digital Hubs</div>
+      <div class="section-title">"1984" — AI access in<br><em>every public library.</em></div>
+      <div class="section-subtitle">Purpose-built technology pods installed in public libraries at no capital cost to councils.</div>
     </div>
-    <div class="audience-cards reveal">
-      <div class="audience-card">
-        <h3>Young People</h3>
-        <ul>
-          <li>Free AI tools for career development</li>
-          <li>Content creation studio access</li>
-          <li>Digital entrepreneurship programmes</li>
-          <li>Research support and mentorship</li>
-          <li>No prior experience required</li>
-        </ul>
+    <div class="library-grid">
+      <div class="library-copy reveal">
+        <p>The Library Digital Hubs programme puts AI directly into the buildings people already trust and visit. Each hub is a self-contained pod — branded "1984" — designed to slot into existing library floor plans without structural work or capital expenditure from the council.</p>
+        <p>The design is a hexagonal honeycomb structure with motorised entry, integrated audio isolation, and zone-differentiated lighting across five pod types. Each serves a different use case, from private AI-assisted job coaching to group collaboration and content creation.</p>
+        <p>Westminster has been identified as the strongest pilot borough. The model is designed to scale nationally once operational.</p>
       </div>
-      <div class="audience-card">
-        <h3>Donors & Funders</h3>
-        <ul>
-          <li>Transparent impact tracking on the map</li>
-          <li>AI-powered portfolio analysis</li>
-          <li>Consolidated reporting from partner data</li>
-          <li>Gap identification for future funding</li>
-          <li>Full accountability architecture</li>
-        </ul>
-      </div>
-      <div class="audience-card">
-        <h3>NGOs & Researchers</h3>
-        <ul>
-          <li>Showcase projects on the global map</li>
-          <li>Access contextual data layers for programme design</li>
-          <li>Identify partners working in adjacent areas</li>
-          <li>Contribute and cross-reference field data</li>
-          <li>Spatial analysis for evidence-based policy</li>
-        </ul>
+      <div class="pod-types reveal-stagger">
+        <div class="pod-type">
+          <div class="pod-num">01</div>
+          <div>
+            <h4>Focus pod</h4>
+            <p>Single-occupancy workspace for AI-assisted job applications, CV writing, and career research.</p>
+          </div>
+        </div>
+        <div class="pod-type">
+          <div class="pod-num">02</div>
+          <div>
+            <h4>Collaboration pod</h4>
+            <p>Two-to-four person space for group projects, interview practice, and peer learning.</p>
+          </div>
+        </div>
+        <div class="pod-type">
+          <div class="pod-num">03</div>
+          <div>
+            <h4>Creator pod</h4>
+            <p>Equipped for audio and video content creation with integrated lighting and sound isolation.</p>
+          </div>
+        </div>
+        <div class="pod-type">
+          <div class="pod-num">04</div>
+          <div>
+            <h4>Training pod</h4>
+            <p>Small-group digital skills sessions with screen-sharing and structured AI programmes.</p>
+          </div>
+        </div>
+        <div class="pod-type">
+          <div class="pod-num">05</div>
+          <div>
+            <h4>Access pod</h4>
+            <p>Fully accessible design with adjustable workstations and assistive technology.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- CONTACT -->
-<div id="contact">
-  <div class="inner">
-    <div class="reveal">
-      <div class="section-header">
-        <div class="section-num">05 / Contact</div>
-        <h2 class="section-heading">Partner with<br><em>AI Britain CIC.</em></h2>
-      </div>
-      <p class="contact-lead">Whether you are a funder, a local authority, a community organisation, or an individual who wants to get involved — we want to hear from you.</p>
-      <div class="contact-methods">
-        <div class="contact-method">
-          <span class="contact-method-label">Email</span>
-          <a href="mailto:abbie@aibritain.org">abbie@aibritain.org</a>
-        </div>
-        <div class="contact-method">
-          <span class="contact-method-label">Web</span>
-          <a href="https://www.aibritain.org">www.aibritain.org</a>
-        </div>
-        <div class="contact-method">
-          <span class="contact-method-label">Status</span>
-          <span>Community Interest Company — England & Wales</span>
-        </div>
-      </div>
+<div class="line-reveal"></div>
+
+<!-- AUDIENCES -->
+<div id="audiences" class="section">
+  <div class="section-header reveal">
+    <div class="section-label">05 / Who we serve</div>
+    <div class="section-title">Built for people, <em>not profit.</em></div>
+  </div>
+  <div class="audience-grid reveal-stagger">
+    <div class="audience-card">
+      <h3>Young people</h3>
+      <ul>
+        <li>Free AI tools for career development</li>
+        <li>Content creation studio access</li>
+        <li>Digital entrepreneurship programmes</li>
+        <li>Research support and mentorship</li>
+        <li>No prior experience required</li>
+      </ul>
     </div>
-    <div class="contact-form-area reveal">
-      <h3>Send an Enquiry</h3>
-      <div class="form-group">
-        <label>Your Name</label>
-        <input type="text" placeholder="Full name">
+    <div class="audience-card">
+      <h3>Donors and funders</h3>
+      <ul>
+        <li>Transparent impact tracking</li>
+        <li>AI-powered portfolio analysis</li>
+        <li>Consolidated partner reporting</li>
+        <li>Gap identification for future funding</li>
+        <li>Full accountability architecture</li>
+      </ul>
+    </div>
+    <div class="audience-card">
+      <h3>NGOs and researchers</h3>
+      <ul>
+        <li>Showcase projects on the global map</li>
+        <li>Contextual data layers for programme design</li>
+        <li>Identify partners in adjacent areas</li>
+        <li>Cross-reference field data</li>
+        <li>Spatial analysis for evidence-based policy</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="section-full contact-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">06 / Contact</div>
+      <div class="section-title">Partner with <em>AI Britain.</em></div>
+    </div>
+    <div class="contact-grid">
+      <div class="reveal">
+        <p class="contact-lead">Whether you are a funder, a local authority, a community organisation, or an individual who wants to get involved — we want to hear from you.</p>
+        <div class="contact-methods">
+          <div class="contact-method">
+            <span class="cm-label">Email</span>
+            <a href="mailto:hello@aibritain.org">hello@aibritain.org</a>
+          </div>
+          <div class="contact-method">
+            <span class="cm-label">Web</span>
+            <a href="https://www.aibritain.org">www.aibritain.org</a>
+          </div>
+          <div class="contact-method">
+            <span class="cm-label">Status</span>
+            <span style="color:var(--white-60);">Community Interest Company — England & Wales</span>
+          </div>
+        </div>
       </div>
-      <div class="form-group">
-        <label>Organisation</label>
-        <input type="text" placeholder="Organisation or institution">
+      <div class="contact-form reveal">
+        <h3>Send an enquiry</h3>
+        <div class="form-group">
+          <label>Your name</label>
+          <input type="text" placeholder="Full name">
+        </div>
+        <div class="form-group">
+          <label>Organisation</label>
+          <input type="text" placeholder="Organisation or institution">
+        </div>
+        <div class="form-group">
+          <label>Email address</label>
+          <input type="email" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label>Enquiring as</label>
+          <select>
+            <option>— Select —</option>
+            <option>Funder or donor</option>
+            <option>Local authority</option>
+            <option>NGO or partner organisation</option>
+            <option>Researcher or academic</option>
+            <option>Young person seeking access</option>
+            <option>Church of Scotland / General Trustees</option>
+            <option>Media or press</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell us how you'd like to work together..."></textarea>
+        </div>
+        <button class="form-submit">Send enquiry</button>
       </div>
-      <div class="form-group">
-        <label>Email Address</label>
-        <input type="email" placeholder="your@email.com">
-      </div>
-      <div class="form-group">
-        <label>I am enquiring as a</label>
-        <select>
-          <option>— Select —</option>
-          <option>Funder or Donor</option>
-          <option>Local Authority</option>
-          <option>NGO or Partner Organisation</option>
-          <option>Researcher or Academic</option>
-          <option>Young Person seeking access</option>
-          <option>Media or Press</option>
-          <option>Other</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Message</label>
-        <textarea placeholder="Tell us how you'd like to work together..."></textarea>
-      </div>
-      <button class="form-submit">Send Enquiry</button>
     </div>
   </div>
 </div>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-left">
-    <strong>AI Britain CIC</strong>
-    Community Interest Company · Registered in England & Wales<br>
-    © 2025 AI Britain. All rights reserved.
+  <div>
+    <div class="footer-brand">AI Britain CIC</div>
+    Community Interest Company · Registered in England & Wales · © 2025
   </div>
   <div class="footer-links">
     <a href="#about">About</a>
-    <a href="#platform">Platform</a>
-    <a href="#carnegie">Carnegie Project</a>
+    <a href="#programmes">Programmes</a>
+    <a href="#carnegie">Carnegie</a>
+    <a href="#libraries">Library Hubs</a>
     <a href="#contact">Contact</a>
-    <a href="mailto:abbie@aibritain.org">Email Us</a>
   </div>
 </footer>
 
 <script>
-  // Intersection Observer for reveal animations
-  const reveals = document.querySelectorAll('.reveal');
+  // Intersection observer for all reveal types
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
+    entries.forEach(entry => {
       if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        observer.unobserve(entry.target);
+        entry.target.classList.add('visible');
       }
     });
-  }, { threshold: 0.12 });
-  reveals.forEach(el => observer.observe(el));
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.reveal, .reveal-stagger, .line-reveal').forEach(el => observer.observe(el));
+
+  // Parallax glow movement on mouse
+  document.addEventListener('mousemove', (e) => {
+    const x = e.clientX / window.innerWidth;
+    const y = e.clientY / window.innerHeight;
+    const glows = document.querySelectorAll('.glow');
+    glows.forEach((g, i) => {
+      const speed = (i + 1) * 8;
+      g.style.transform = `translate(${(x - 0.5) * speed}px, ${(y - 0.5) * speed}px)`;
+    });
+  });
+
+  // Masthead background on scroll
+  const masthead = document.querySelector('.masthead');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      masthead.style.background = 'rgba(6,45,27,0.85)';
+    } else {
+      masthead.style.background = 'rgba(6,45,27,0.6)';
+    }
+  });
 </script>
 
 </body>
